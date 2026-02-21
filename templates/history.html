@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortly - History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="card">
+        <p class="brand">Shortly</p>
+        <h1>My Links</h1>
+        <p class="sub">All your shortened links</p>
+        {% for url in urls %}
+        <div class="result">
+            <p class="result-label">{{ url.clicks }} clicks</p>
+            <a href="{{ request.host_url }}{{ url.short_code }}" target="_blank">
+                {{ request.host_url }}{{ url.short_code }}
+            </a>
+            <p class="original-url">↳ {{ url.original }}</p>
+            <form action="{{ url_for('delete', id=url.id) }}" method="POST">
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+        {% endfor %}
+        <p class="sub links-row">
+            <a href="{{ url_for('index') }}">Shorten Links</a> · 
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </p>
+    </div>
+</body>
+</html>

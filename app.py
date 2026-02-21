@@ -49,7 +49,9 @@ def index():
 def history():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    return render_template("history.html")
+    db = get_db()
+    urls = db.execute('SELECT * FROM urls WHERE user_id = ? ORDER BY id DESC', (session['user_id'],)).fetchall()
+    return render_template("history.html", urls=urls)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -79,6 +81,15 @@ def signup():
         db.commit()
         return redirect(url_for('login', success='Account created successfully! Log In'))
     return render_template("signup.html")
+
+@app.route('/delete/<int:id>', methods=['POST'])
+def delete(id):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    db = get_db()
+    db.execute('DELETE FROM urls WHERE id = ? AND user_id = ?', (id, session['user_id']))
+    db.commit()
+    return redirect(url_for('history'))
 
 @app.route('/shorten', methods=['POST'])
 def shorten():
