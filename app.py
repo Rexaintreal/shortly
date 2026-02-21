@@ -37,7 +37,15 @@ def init():
 
 @app.route('/')
 def index():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
     return render_template("index.html")
+
+@app.route('/history')
+def history():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template("history.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -68,17 +76,16 @@ def signup():
         return redirect(url_for('login', success='Account created successfully! Log In'))
     return render_template("signup.html")
 
-@app.route('/history')
-def history():
-    return render_template("history.html")
-
 @app.route('/shorten', methods=['POST'])
 def shorten():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
     return '', 204
 
 @app.route('/logout')
 def logout():
-    return '', 204
+    session.clear()
+    return redirect(url_for('login'))
 
 @app.route('/<code>')
 def redirect_short(code):

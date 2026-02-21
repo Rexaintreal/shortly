@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortly</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+</head>
+<body>
+    <div class="card">
+        <p class="brand">Shortly</p>
+        <h1>Shorten your links</h1>
+        <p class="sub">Long links are weird, right? use Shortly to shorten them.</p>
+        <form action="{{ url_for('shorten' )}}" method="POST">
+            <label>Your Long URL</label>
+            <input type="text" name="url" placeholder="https://somewebsite.com/longahhlink">
+            <button type="submit">Shorten</button>
+        </form>
+        {% if short_url %}
+        <div class="result">
+            <p class="result-label">Short Link</p>
+            <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+        </div>
+        {% endif %}
+        <p class="sub" style="margin-top: 32px;">
+            <a href="{{ url_for('history') }}">My History</a> · 
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </p>
+    </div>
+</body>
+</html>
