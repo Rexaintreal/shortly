@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shortly</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css')}}">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="card">
         <p class="brand">Shortly</p>
         <h1>Shorten your links</h1>
         <p class="sub">Long links are weird, right? use Shortly to shorten them.</p>
-        <form action="{{ url_for('shorten' )}}" method="POST">
+        <form action="{{ url_for('shorten') }}" method="POST">
             <label>Your Long URL</label>
             <input type="text" name="url" placeholder="https://somewebsite.com/longahhlink">
             <button type="submit">Shorten</button>
@@ -22,10 +23,41 @@
             <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
         </div>
         {% endif %}
-        <p class="sub" style="margin-top: 32px;">
+        <p class="sub links-row">
             <a href="{{ url_for('history') }}">My History</a> · 
             <a href="{{ url_for('logout') }}">Logout</a>
         </p>
     </div>
+
+    <img src="{{ url_for('static', filename='images/dvdcat.png') }}" id="dvd-car">
+
+    <button onclick="toggleMenu()" id="gear-btn">
+        <i data-lucide="settings-2"></i>
+    </button>
+
+    <div id="settings">
+        <div class="settings-row">
+            <span>DVD Car?</span>
+            <div id="toggle" onclick="toggleCat()">
+                <div id="toggle-knob"></div>
+            </div>
+        </div>
+        <div class="settings-slider">
+            <div class="settings-row">
+                <span>Speed</span>
+                <span id="speed-val">2</span>
+            </div>
+            <input type="range" min="1" max="60" value="2" oninput="changeSpeed(this.value)">
+        </div>
+        <div class="settings-slider">
+            <div class="settings-row">
+                <span>Size</span>
+                <span id="size-val">80px</span>
+            </div>
+            <input type="range" min="40" max="400" value="80" oninput="changeSize(this.value)">
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
