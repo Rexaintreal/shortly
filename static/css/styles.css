@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0F0F10;
+    color: #F5F5F5;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 26px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    padding: 0 24px;
+}
+
+h1 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+}
+
+.sub {
+    color: #A1A1AA;
+    font-size: 13px;
+    line-height: 22px;
+    margin-bottom: 40px;
+}
+
+.sub a {
+    color: #F5F5F5;
+    text-decoration: none;
+    margin-left: 4px;
+    transition: all 0.2s ease;
+}
+
+.sub a:hover {
+    color: #A1A1AA;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: #A1A1AA;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input {
+    display: block;
+    width: 100%;
+    background: #17181A;
+    border: 1px solid #24262B;
+    border-radius: 12px;
+    color: #F5F5F5;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+input:focus {
+    border-color: #3F3F46;
+}
+
+input::placeholder {
+    color: #6B7280;
+}
+
+button {
+    width: 100%;
+    background: #F5F5F5;
+    color: #0F0F10;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 4px;
+}
+
+button:hover {
+    background: #E5E5E5;
+}

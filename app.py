@@ -37,25 +37,29 @@ def init():
 def index():
     return render_template("index.html")
 
-@app.route('/shorten', methods=['POST'])
-def shorten():
-    pass
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template("login.html")
 
-@app.route('/login')
-def auth():
-    return render_template("auth.html")
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    return render_template("signup.html")
 
 @app.route('/history')
 def history():
     return render_template("history.html")
 
+@app.route('/shorten', methods=['POST'])
+def shorten():
+    return '', 204
+
 @app.route('/logout')
 def logout():
-    pass
+    return '', 204
 
 @app.route('/<code>')
 def redirect_short(code):
-    pass
+    return '', 204
 
 if __name__ == "__main__":
     with app.app_context():
