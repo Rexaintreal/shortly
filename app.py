@@ -1,9 +1,11 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, request, redirect, url_for, session
 import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 Db = 'shortly.db'
 app = Flask(__name__)
+app.secret_key = "sUpErSeCrEtKeYtHiSiSsOsAfEhAhAhAiNeEdSlUsHiEs"
 
 def get_db():
     if 'db' not in g:
@@ -39,10 +41,31 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        db = get_db()
+        user = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        if user and check_password_hash(user['password'], password):
+            session['user_id'] = user['id']
+            session['username'] = user['username']
+            return redirect(url_for('index'))
+        else:
+            return render_template('login.html', error='Invalid username or password')
+    return render_template("login.html", success=request.args.get('success'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        db = get_db()
+        existing = db.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        if existing:
+            return render_template('signup.html', error='Username already taken')
+        db.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, generate_password_hash(password)))
+        db.commit()
+        return redirect(url_for('login', success='Account created successfully! Log In'))
     return render_template("signup.html")
 
 @app.route('/history')

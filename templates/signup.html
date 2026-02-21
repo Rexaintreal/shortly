@@ -9,6 +9,9 @@
 <body>
     <div class="card">
         <h1>Create Account</h1>
+        {% if error %}
+        <p style="color: #EF4444; font-size: 13px; margin-bottom: 2px;">{{ error }}</p>
+        {% endif %}
         <p class="sub">Already have one?<a href="{{ url_for('login') }}">Login</a></p>
         <form action="{{ url_for('signup')}}" method="POST">
             <label>Username</label>
