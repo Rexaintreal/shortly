@@ -102,5 +102,4 @@ shortly/
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
-```
+MIT License - [LICENSE](LICENSE)
