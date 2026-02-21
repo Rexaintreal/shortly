@@ -1,6 +1,8 @@
 from flask import Flask, render_template, g, request, redirect, url_for, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
+import random
+import string
 
 
 Db = 'shortly.db'
@@ -13,6 +15,8 @@ def get_db():
         g.db.row_factory = sqlite3.Row
     return g.db
 
+def make_code():
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=6))
 
 def close_db(e=None):
     db = g.pop('db', None)
@@ -80,7 +84,16 @@ def signup():
 def shorten():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    return '', 204
+    url = request.form['url']
+    if not url.startswith('http'):
+        url = 'https://' + url
+    db = get_db()
+    code = make_code()
+    db.execute('INSERT INTO urls (user_id, original, short_code) VALUES (?, ?, ?)',
+        (session['user_id'], url, code))
+    db.commit()
+    short_url = request.host_url + code
+    return render_template('index.html', short_url=short_url)
 
 @app.route('/logout')
 def logout():
@@ -89,7 +102,13 @@ def logout():
 
 @app.route('/<code>')
 def redirect_short(code):
-    return '', 204
+    db = get_db()
+    url = db.execute('SELECT * FROM urls WHERE short_code = ?', (code,)).fetchone()
+    if not url:
+        return redirect(url_for('index'))
+    db.execute('UPDATE urls SET clicks = clicks + 1 WHERE short_code = ?', (code,))
+    db.commit()
+    return redirect(url['original'])
 
 if __name__ == "__main__":
     with app.app_context():
