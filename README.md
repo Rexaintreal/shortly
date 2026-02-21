@@ -20,6 +20,13 @@ Shortly is a URL shortener I built with flask and sqlite with a history page lin
 
 - You can try shortly at [https://shortly.pythonanywhere.com/](https://shortly.pythonanywhere.com/)
 
+## Screenshots
+
+![Home](static/images/screenshots/homepage.png)
+![Signup](static/images/screenshots/signup.png)
+![Login](static/images/screenshots/login.png)
+![History](static/images/screenshots/history.png)
+
 ## Features
 
 - **User Authentication** - login and signup with hashed passwords (SECURE)
